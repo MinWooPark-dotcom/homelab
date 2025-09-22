@@ -14,7 +14,7 @@
 ## 하드웨어 구성
 
 ### Master Node (1대)
-쿠버네티스 클러스터의 마스터 노드 역할을 수행합니다. 운영 안정성, 지속 가능성, 그리고 전력 효율을 최우선으로 고려하여 선택했습니다.
+쿠버네티스 클러스터의 마스터 노드 역할을 수행합니다. 운영 안정성, 전력 효율을 우선으로 고려하여 선택했습니다.
 - 모델명: GMKtec GMK G3 plus
 - CPU: Intel(R) N150 (4-core, 4-thread @ 3.6GHz)
 - RAM: DDR4 16GB SODIMM (3200 MT/s)
@@ -48,3 +48,17 @@ WireGuard VPN을 통해 외부에서도 홈랩에 안전하게 접속하고 관�
 
 # 소프트웨어
 작성 전...
+
+# 레포 구조
+```bash
+homelab/
+├ scripts/       # Bash 기반 자동화
+├ ansible/       # Ansible 플레이북
+├ k8s/           # Kubernetes 매니페스트
+├ apps/          # 애플리케이션 배포
+├ helm-charts/   # Helm 차트
+├ cicd/          # CI/CD 파이프라인
+├ monitoring/    # Prometheus, Grafana
+├ logging/       # Elasticsearch, Loki, Kibana
+├ docs/          # 아키텍처, 운영 매뉴얼, Runbooks
+```
