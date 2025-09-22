@@ -19,6 +19,9 @@ Ansible로 확장하기 전 단계로, 직접 명령어를 자동화해 반복 �
 - **reset-cluster.sh**  
   클러스터 완전 초기화. kubeadm, CNI, iptables 흔적까지 제거.
 
+- **reset-worker-node.sh**  
+  워클러스터 완전 초기화. kubeadm, CNI, iptables 흔적까지 제거.
+
 ## 사용법
 ```bash
 chmod +x ./scripts
@@ -29,7 +32,8 @@ chmod +x ./scripts
 # 워커 노드 조인
 ./join-worker.sh "<kubeadm join ...>"
 # 필요 시 모든 노드에서 클러스터 초기화
-./reset-cluster.sh
+./reset-node.sh master 
+./reset-node.sh worker
 ```
 
 ## 클러스터 초기화 전/후 확인 방법
