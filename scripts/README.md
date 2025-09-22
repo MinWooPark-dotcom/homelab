@@ -16,11 +16,11 @@ Ansible로 확장하기 전 단계로, 직접 명령어를 자동화해 반복 �
 - **join-worker.sh**  
   워커 노드에서 실행. `init-master.sh`가 출력한 join 명령을 인자로 넘겨 실행.
 
-- **reset-cluster.sh**  
+- **reset-node.sh**  
   클러스터 완전 초기화. kubeadm, CNI, iptables 흔적까지 제거.
 
-- **reset-worker-node.sh**  
-  워클러스터 완전 초기화. kubeadm, CNI, iptables 흔적까지 제거.
+- **check-reset-status.sh**  
+  클러스터 초기화 후 상태 확인.
 
 ## 사용법
 ```bash
@@ -31,9 +31,11 @@ chmod +x ./scripts
 ./init-master.sh
 # 워커 노드 조인
 ./join-worker.sh "<kubeadm join ...>"
-# 필요 시 모든 노드에서 클러스터 초기화
+# 필요 시 모든 노드 초기화
 ./reset-node.sh master 
 ./reset-node.sh worker
+# 클러스터 초기화 후 상태 확인
+./check-reset-status.sh
 ```
 
 ## 클러스터 초기화 전/후 확인 방법
