@@ -1,0 +1,10 @@
+- name: Join worker nodes
+  hosts: workers
+  become: yes
+  vars_prompt:
+    - name: join_command
+      prompt: "Paste the kubeadm join command from master"
+      private: no
+  tasks:
+    - name: Run kubeadm join
+      command: "{{ join_command }}"
