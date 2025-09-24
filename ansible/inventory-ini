@@ -1,0 +1,6 @@
+[master]
+localhost ansible_connection=local
+
+[workers]
+192.168.0.20
+192.168.0.30
