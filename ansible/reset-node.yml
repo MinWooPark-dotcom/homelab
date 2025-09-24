@@ -1,0 +1,21 @@
+- name: Reset Kubernetes node
+  hosts: all
+  become: yes
+  tasks:
+    - name: Reset kubeadm
+      command: kubeadm reset -f
+
+    - name: Remove CNI configs
+      file:
+        path: /etc/cni/net.d
+        state: absent
+
+    - name: Remove CNI state
+      file:
+        path: /var/lib/cni
+        state: absent
+
+    - name: Restart containerd
+      systemd:
+        name: containerd
+        state: restarted
