@@ -9,11 +9,13 @@ Ansible로 확장하기 전 단계로, 직접 명령어를 자동화해 반복 �
 
 ## 스크립트 파일
 - install-common.sh  
-  모든 노드에서 공통으로 실행. K8s docs Installing kubeadm - Installing kubeadm, kubelet and kubectl에 해당
+  - 모든 노드에서 공통으로 실행. K8s docs "Installing kubeadm - Installing kubeadm, kubelet and kubectl"에 해당
 - init-master.sh  
-  마스터 노드 초기화
+  - 마스터 노드 초기화. K8s docs "Creating a cluster with kubeadm - Initializing your control-plane node"에 해당
 - reset-node.sh  
-  클러스터 초기화
+  - 클러스터 초기화. 
+- install-cni
+  - CNI 설치.
 
 ## 사용법
 ```bash
@@ -31,6 +33,16 @@ chmod +x *.sh
 ./init-master.sh의 출력값을 실행
  e.g. sudo kubeadm join <control-plane-host>:<control-plane-port> --token <token> --discovery-token-ca-cert-hash sha256:<hash>
 
-# 필요 시 모든 노드 초기화
+# 필요 시 노드 초기화
 ./reset-node.sh
+
+# CNI 설치
+./install-cni.sh
 ```
+
+## 개념
+- CNI
+  - 랜카드의 역할을 하는 가상 인터페이스.
+  - CNI 규격에 맞추어 만들어 네트워크 인터페이스를 만드는 CNI plugin을 설치해야 K8s 내에서 네트워크 가능함.
+  - CNI 설정(/etc/cni/net.d/*.conflist) 을 읽어서 네트워크 세팅을 함.
+  - 주의해야 할 점은 CNI 교체 시 /etc/cni/net.d/ 에서 기존 CNI plugin 파일 제거해야함.
