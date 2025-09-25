@@ -15,9 +15,11 @@ Shell Script는 설치가 필요한 각 서버에서 개별적으로 실행해�
 - Ansible이 컨트롤 노드에 설치되어 있어야 합니다.  
 - 컨트롤 노드의 SSH 공개키가 모든 워커 노드의 `~/.ssh/authorized_keys`에 등록되어 있어야 합니다.  
 
-## 스크립트 파일
+## 파일
 - inventory.ini  
   - 마스터, 워커 노드의 IP 주소를 정의.
+- ansible.cfg
+  - 설정 파일
 - install-common.yml
   - 모든 노드에서 공통으로 실행. K8s docs "Installing kubeadm - Installing kubeadm, kubelet and kubectl"에 해당.
 - init-master.yml
@@ -55,6 +57,8 @@ ansible all -m ping -e @vault.yml
 ansible-playbook install-common.yml
 ansible-playbook init-master.yml
 ansible-playbook join-worker.yml
+
+ansible-playbook install-cni.yml
 
 # 필요 시 노드 초기화
 ansible-playbook reset-node.yml
