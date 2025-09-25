@@ -1,0 +1,34 @@
+- name: Check reset status
+  hosts: all
+  become: yes
+  tasks:
+    - name: Check /etc/cni/net.d
+      command: ls /etc/cni/net.d
+      register: cni_netd
+      failed_when: false
+      changed_when: false
+
+    - debug:
+        msg: "{{ 'Exist /etc/cni/net.d directory' if cni_netd.rc == 0 else 'No /etc/cni/net.d directory'}}"
+
+
+    - name: Check /var/lib/cni
+      command: ls /var/lib/cni
+      register: cni_varlib
+      failed_when: false
+      changed_when: false
+
+    - debug:
+        msg: "{{ 'Exist /var/lib/cni directory' if cni_varlib.rc == 0 else 'No /var/lib/cni directory' }}"
+
+    - name: Check kubeconfig
+      command: cat ~/.kube/config
+      register: kubeconfig
+      failed_when: false
+      changed_when: false
+      become: false
+      when: "'master' in group_names"
+
+    - debug:
+        msg: "{{ 'Exist ~/.kube/config file' if kubeconfig.rc == 0 else 'No ~/.kube/config file' }}"
+      when: "'master' in group_names"
