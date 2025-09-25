@@ -1,6 +1,8 @@
 - name: Reset Kubernetes node
   hosts: all
   become: yes
+  vars_files:
+    - vault.yml
   tasks:
     - name: Reset kubeadm
       command: kubeadm reset -f
@@ -15,7 +17,14 @@
         path: /var/lib/cni
         state: absent
 
+    - name: Remove kubeconfig
+      file:
+        path: "{{ lookup('env','HOME') }}/.kube/config"
+        state: absent
+      become: false
+      when: "'master' in group_names"
+
     - name: Restart containerd
-      systemd:
+      service:
         name: containerd
         state: restarted
