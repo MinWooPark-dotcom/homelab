@@ -1,0 +1,6 @@
+# OS
+.DS_store
+
+# ansible vault 
+/ansible/vault.yml
+/ansible/.vault-pass.txt
