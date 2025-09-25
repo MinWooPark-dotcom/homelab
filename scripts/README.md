@@ -12,12 +12,12 @@ Ansible로 확장하기 전 단계로, 직접 명령어를 자동화해 반복 �
   - 모든 노드에서 공통으로 실행. K8s docs "Installing kubeadm - Installing kubeadm, kubelet and kubectl"에 해당.
 - init-master.sh  
   - 마스터 노드 초기화. K8s docs "Creating a cluster with kubeadm - Initializing your control-plane node"에 해당.
-- reset-node.sh  
-  - 클러스터 초기화. 
 - install-cni
   - CNI 설치.
+- reset-node.sh  
+  - 노드 초기화. 
 - check-reset-node
-  - 클러스터 정상 초기화가 되었는지 확인.
+  - 노드 정상 초기화 확인.
 
 ## 사용법
 ```bash
