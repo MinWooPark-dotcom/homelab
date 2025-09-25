@@ -1,6 +1,8 @@
 - name: Install Kubernetes prerequisites
   hosts: all
   become: yes
+  vars_files:
+    - vault.yml
   tasks:
     - name: Update apt and install dependencies
       apt:

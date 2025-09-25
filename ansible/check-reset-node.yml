@@ -1,6 +1,8 @@
 - name: Check reset status
   hosts: all
   become: yes
+  vars_files:
+    - vault.yml
   tasks:
     - name: Check /etc/cni/net.d
       command: ls /etc/cni/net.d

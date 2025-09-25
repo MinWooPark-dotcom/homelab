@@ -1,6 +1,8 @@
 - name: Deploy Flannel CNI
   hosts: master
   become: yes
+  vars_files:
+    - vault.yml
   tasks:
     - name: Apply Flannel manifest
       command: >

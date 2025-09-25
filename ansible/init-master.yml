@@ -1,6 +1,8 @@
 - name: Initialize Kubernetes master
   hosts: master
   become: yes
+  vars_files:
+    - vault.yml
   tasks:
     - name: Run kubeadm init
       command: kubeadm init --pod-network-cidr=10.244.0.0/16
