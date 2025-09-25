@@ -11,11 +11,11 @@
       register: kubeadm_output
 
     - name: Setup kubeconfig for user
-      become_user: "{{ ansible_user | default(lookup('env','USER')) }}"
+      become: yes
       shell: |
-        mkdir -p $HOME/.kube
-        sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
-        sudo chown $(id -u):$(id -g) $HOME/.kube/config
+        mkdir -p /home/{{ ansible_user }}/.kube
+        cp -f /etc/kubernetes/admin.conf /home/{{ ansible_user }}/.kube/config
+        chown {{ ansible_user }}:{{ ansible_user }} /home/{{ ansible_user }}/.kube/config
       args:
         executable: /bin/bash
 
