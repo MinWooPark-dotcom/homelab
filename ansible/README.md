@@ -18,16 +18,21 @@ Shell Script는 설치가 필요한 각 서버에서 개별적으로 실행해�
 ## 스크립트 파일
 - inventory.ini  
   - 마스터, 워커 노드의 IP 주소를 정의.
-- install-docker.yml  
-  - 모든 노드에 containerd 설치 및 초기 설정.
-- kubeadm-init.yml  
-  마스터 노드 초기화 및 kubeconfig 설정.
-- kubeadm-join.yml  
+- install-common.yml
+  - 모든 노드에서 공통으로 실행. K8s docs "Installing kubeadm - Installing kubeadm, kubelet and kubectl"에 해당.
+- init-master.yml
+  - 마스터 노드 초기화. K8s docs "Creating a cluster with kubeadm - Initializing your control-plane node"에 해당.
+- join-worker.yml  
   워커 노드를 클러스터에 조인.
-
+- install-cni.yml
+  - CNI 설치.
+- reset-node.yml
+  - 클러스터 초기화
+- check-reset-node.yml
+  - 클러스터 정상 초기화 확인
+- 
 ## 사용법
 ```bash
-# ansible 설치
 sudo apt update
 sudo apt install -y ansible
 
@@ -40,23 +45,20 @@ chmod +x *.sh
 ansible-vault create vault.yml
 
 # vault password file 생성 및 권한 설정
-echo "vault 파일 비밀번호" > .vault_pass.txt
-chmod 600 .vault_pass.txt
+echo "vault 파일 비밀번호" > .vault-pass.txt
+chmod 600 .vault-pass.txt
 
 # inventory 확인
-ansible -i inventory.ini all -m ping
+# vault.yml에 있는 변수들을 extra-vars로 불러옴.
+ansible all -m ping -e @vault.yml
 
-# 모든 노드에 공통 설치
-ansible-playbook -i inventory.ini install-common.yml --vault-password-file .vault_pass.txt
-
-# 마스터 노드 초기화
-ansible-playbook -i inventory.ini init-master.yml --vault-password-file .vault_pass.txt
-
-# 워커 노드 조인
-ansible-playbook -i inventory.ini join-worker.yml --vault-password-file .vault_pass.txt
+ansible-playbook install-common.yml
+ansible-playbook init-master.yml
+ansible-playbook join-worker.yml
 
 # 필요 시 노드 초기화
-ansible-playbook -i inventory.ini reset-node.yml --vault-password-file .vault_pass.txt
+ansible-playbook reset-node.yml
+ansible-playbook check-reset-node.yml
 
 ```
 
