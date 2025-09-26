@@ -10,10 +10,10 @@
 작성 전...
 
 # 하드웨어
-<div style="display:flex; gap:10px;">
+<p>
   <img src="./images/homelab-1.jpeg" height="400px" alt="mini pc">
   <img src="./images/homelab-2.jpeg" height="400px" alt="mini pc">
-</div>
+</p>
 
 
 ## 하드웨어 구성
