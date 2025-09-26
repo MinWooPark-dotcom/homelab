@@ -10,6 +10,11 @@
 작성 전...
 
 # 하드웨어
+<div style="display:flex; gap:10px;">
+  <img src="./images/homelab-1.jpeg" height="400px" alt="mini pc">
+  <img src="./images/homelab-2.jpeg" height="400px" alt="mini pc">
+</div>
+
 
 ## 하드웨어 구성
 
@@ -59,6 +64,6 @@ homelab/
 ├ helm-charts/   # Helm 차트
 ├ cicd/          # CI/CD 파이프라인
 ├ monitoring/    # Prometheus, Grafana
-├ logging/       # Elasticsearch, Loki, Kibana
+├ logging/       # Elasticsearch, Logstash, Kibana
 ├ docs/          # 아키텍처, 운영 매뉴얼, Runbooks
 ```
