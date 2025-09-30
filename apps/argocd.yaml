@@ -5,14 +5,17 @@ metadata:
   namespace: argocd
 spec:
   project: default
-  source:
-    repoURL: https://argoproj.github.io/argo-helm
-    chart: argo-cd
-    targetRevision: 6.7.4
-    helm:
-      releaseName: argocd
-      valueFiles:
-        - $values/apps/values/argocd-values.yaml # Git repo 안 values 참조, $values/ prefix는 Application 매니페스트가 위치한 Git repo를 기준으로 동작
+  sources:
+    - repoURL: https://github.com/MinWooPark-dotcom/homelab.git
+      targetRevision: main
+      ref: homelab                                  # values를 담은 Git 소스
+    - repoURL: https://argoproj.github.io/argo-helm
+      chart: argo-cd
+      targetRevision: 6.7.4
+      helm:
+        releaseName: argocd
+        valueFiles:
+          - $homelab/apps/values/argocd-values.yaml # Git repo 안 values 참조, $values/ prefix는 Application 매니페스트가 위치한 Git repo를 기준으로 동작
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd
