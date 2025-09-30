@@ -1,5 +1,5 @@
 server:
   service:
     type: NodePort
-  ingress:
-    enabled: false   # 나중에 Ingress 붙일 때 true로 변경
+    nodePortHttp: 30080
+    nodePortHttps: 30443
