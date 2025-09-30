@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: root-app                  # Application 리소스의 이름 (클러스터 안에서 구분용)
+  namespace: argocd               # Application 객체 자체가 존재할 네임스페이스 (ArgoCD는 기본적으로 argocd 안에서 동작)
+spec:
+  project: default                # ArgoCD 프로젝트 (별도 정의 없으면 default 사용)
+  source:
+    repoURL: 'https://github.com/MinWooPark-dotcom/homelab.git'
+    targetRevision: main          # 깃 브랜치
+    path: apps                    # 깃 리포 안에서 실제 매니페스트가 있는 경로
+  destination:
+    server: https://kubernetes.default.svc      # 배포할 클러스터 (자기 자신 클러스터)
+    namespace: argocd             # 리소스가 배포될 네임스페이스 (여기서는 argocd)
+  syncPolicy:
+    automated:                    # 자동 동기화 설정
+      prune: true                 # 깃에 없는 리소스는 삭제
+      selfHeal: true              # 수동 변경이 있으면 되돌림
