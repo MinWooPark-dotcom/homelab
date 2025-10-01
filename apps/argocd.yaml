@@ -15,7 +15,7 @@ spec:
       helm:
         releaseName: argocd
         valueFiles:
-          - $homelab/apps/values/argocd-values.yaml # Git repo 안 values 참조, $values/ prefix는 Application 매니페스트가 위치한 Git repo를 기준으로 동작
+          - $homelab/values/argocd-values.yaml      # Git repo 안 values 참조
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd
