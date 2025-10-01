@@ -3,7 +3,3 @@ server:
     type: NodePort
     nodePortHttp: 30080
     nodePortHttps: 30443
-repoServer:
-  env:
-    - name: GIT_CONFIG_PARAMETERS
-      value: "http.version=HTTP/1.1"
