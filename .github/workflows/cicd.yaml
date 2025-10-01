@@ -4,6 +4,9 @@ on:
   push:
     branches: ["main"]
 
+env:
+  IMAGE_NAME: ghcr.io/${{ github.repository }}/nginx-test
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -11,6 +14,11 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: Set lowercase IMAGE_NAME
+        run: |
+          IMAGE_NAME_LOWER=$(echo "${IMAGE_NAME}" | tr '[:upper:]' '[:lower:]')
+          echo "IMAGE_NAME=$IMAGE_NAME_LOWER" >> $GITHUB_ENV
 
       - name: Set up Docker
         uses: docker/setup-buildx-action@v3
@@ -24,15 +32,15 @@ jobs:
 
       - name: Build and push image
         run: |
-          IMAGE=ghcr.io/${{ github.repository }}/nginx-test:$(date +%Y%m%d%H%M%S)
-          echo "IMAGE=$IMAGE" >> $GITHUB_ENV
-          docker build -t $IMAGE ./apps/nginx-test
-          docker push $IMAGE
+          IMAGE_TAG=${IMAGE_NAME}:$(date +%Y%m%d%H%M%S)
+          echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV
+          docker build -t $IMAGE_TAG ./apps/nginx-test
+          docker push $IMAGE_TAG
 
       - name: Update manifest with new image
         run: |
-          sed -i "s|image: .*|image: $IMAGE|" apps/nginx-test.yaml
+          sed -i "s|image: .*|image: $IMAGE_TAG|" apps/nginx-test/deployment.yaml
           git config user.name "github-actions"
           git config user.email "actions@github.com"
-          git commit -am "chore: update nginx-test image $IMAGE"
+          git commit -am "chore: update nginx-test image $IMAGE_TAG" || echo "No changes to commit"
           git push
