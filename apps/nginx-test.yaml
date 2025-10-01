@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nginx-test
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/MinWooPark-dotcom/homelab.git
+    targetRevision: main
+    path: apps/nginx-test
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: apps
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
