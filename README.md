@@ -55,15 +55,31 @@ WireGuard VPN을 통해 외부에서도 홈랩에 안전하게 접속하고 관�
 작성 전...
 
 # 레포 구조
+각 디렉토리별 세부 사용법과 리소스 설명은 해당 디렉토리의 README.md 또는 [docs/](./docs)에서 확인할 수 있습니다.
+
 ```bash
 homelab/
-├ scripts/       # Bash 기반 자동화
-├ ansible/       # Ansible 플레이북
-├ k8s/           # Kubernetes 매니페스트
-├ apps/          # 애플리케이션 배포
-├ helm-charts/   # Helm 차트
-├ cicd/          # CI/CD 파이프라인
-├ monitoring/    # Prometheus, Grafana
-├ logging/       # Elasticsearch, Logstash, Kibana
-├ docs/          # 아키텍처, 운영 매뉴얼, Runbooks
+├ .github/
+│   └ workflows/
+│       └ cicd.yaml          # GitHub Actions 워크플로우
+├ ansible/                   # Ansible 플레이북
+├ apps/                      # 애플리케이션 매니페스트, ArgoCD Application 리소스
+│   ├ logging/               # 로깅 스택, 각 app의 매니페스트는 이처럼 디렉토리별로 관리
+│   │   ├ deployment.yaml
+│   │   ├ service.yaml
+│   │   └ values.yaml
+│   ├ monitoring/            # 모니터링 스택
+│   │   ├ deployment.yaml
+│   │   ├ service.yaml
+│   │   └ values.yaml
+│   ├ argocd.yaml            # ArgoCD 자체 배포 Application CR
+│   ├ logging.yaml           # ArgoCD Application CR (path=apps/logging)
+│   ├ monitoring.yaml        # ArgoCD Application CR (path=apps/monitoring)
+│   └ root.yaml              # Root App (App of Apps 패턴)
+├ docs/                      # 아키텍처, 운영 매뉴얼, Runbooks
+├ helm-charts/               # 커스텀 Helm 차트
+├ images/                    # 문서용 이미지
+├ k8s/                       # 클러스터 공통 리소스
+├ scripts/                   # Bash 기반 자동화
+├ values/                    # Helm values override 모음
 ```
