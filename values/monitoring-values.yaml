@@ -1,0 +1,19 @@
+# Helm values override (grafana.admin.existingSecret 지정)
+
+grafana:
+  admin:
+    existingSecret: grafana-admin
+    userKey: admin-user
+    passwordKey: admin-password
+  service:
+    type: NodePort
+    nodePort: 30082
+  persistence:
+    enabled: true
+    size: 2Gi
+  ingress:
+    enabled: true
+    hosts:
+      - grafana.homelab.local
+    path: /
+    pathType: Prefix
