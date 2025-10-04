@@ -15,7 +15,7 @@ spec:
       helm:
         releaseName: ingress-nginx
         valueFiles:
-          - $homelab/values/ingress-nginx.yaml
+          - $homelab/values/ingress-nginx-values.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: ingress-nginx
