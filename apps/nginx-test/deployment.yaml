@@ -15,6 +15,6 @@ spec:
     spec:
       containers:
         - name: nginx
-          image: ghcr.io/minwoopark-dotcom/homelab/nginx-test:20251001075231
+          image: ghcr.io/minwoopark-dotcom/homelab/nginx-test:20251004083130
           ports:
             - containerPort: 80
