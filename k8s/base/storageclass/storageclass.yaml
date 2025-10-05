@@ -1,9 +1,0 @@
-apiVersion: storage.k8s.io/v1
-kind: StorageClass
-metadata:
-  name: rancher.io/local-path
-  annotations:
-    storageclass.kubernetes.io/is-default-class: "true"  # 기본 StorageClass로 지정
-provisioner: rancher.io/local-path                       # local-path-provisioner가 감시하는 프로비저너 이름
-reclaimPolicy: Delete                                    # PVC 삭제 시 PV도 삭제
-volumeBindingMode: WaitForFirstConsumer                  # Pod가 스케줄될 때 실제 볼륨 할당

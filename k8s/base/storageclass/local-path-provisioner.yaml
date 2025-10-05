@@ -1,91 +1,224 @@
-# local-path-provisioner (Rancher 공식)
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: local-path-provisioner
-  namespace: kube-system
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    creationTimestamp: "2025-10-05T16:34:24Z"
+    generateName: local-path-provisioner-6964757ddd-
+    generation: 1
+    labels:
       app: local-path-provisioner
-  template:
-    metadata:
-      labels:
+      pod-template-hash: 6964757ddd
+    name: local-path-provisioner-6964757ddd-hmr7t
+    namespace: kube-system
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: local-path-provisioner-6964757ddd
+      uid: 3539ca04-c6b9-4145-a09b-5b61f27bacb8
+    resourceVersion: "891095"
+    uid: 7e7b3a92-54a3-47b7-b30f-f72dfdaf98ce
+  spec:
+    containers:
+    - command:
+      - local-path-provisioner
+      - --debug
+      - start
+      - --helper-image
+      - busybox:latest
+      image: rancher/local-path-provisioner:v0.0.26
+      imagePullPolicy: IfNotPresent
+      name: local-path-provisioner
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /etc/config/
+        name: config
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-slg6n
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: k8s-worker1
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: local-path-provisioner-service-account
+    serviceAccountName: local-path-provisioner-service-account
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - configMap:
+        defaultMode: 420
+        name: local-path-config
+      name: config
+    - name: kube-api-access-slg6n
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2025-10-05T16:34:30Z"
+      observedGeneration: 1
+      status: "True"
+      type: PodReadyToStartContainers
+    - lastProbeTime: null
+      lastTransitionTime: "2025-10-05T16:34:24Z"
+      observedGeneration: 1
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2025-10-05T16:34:24Z"
+      message: 'containers with unready status: [local-path-provisioner]'
+      observedGeneration: 1
+      reason: ContainersNotReady
+      status: "False"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2025-10-05T16:34:24Z"
+      message: 'containers with unready status: [local-path-provisioner]'
+      observedGeneration: 1
+      reason: ContainersNotReady
+      status: "False"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2025-10-05T16:34:24Z"
+      observedGeneration: 1
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://6ec056db7a023bd3e78690737253993f2e810f4164372503569c406d084f7117
+      image: docker.io/rancher/local-path-provisioner:v0.0.26
+      imageID: docker.io/rancher/local-path-provisioner@sha256:aee53cadc62bd023911e7f077877d047c5b3c269f9bba25724d558654f43cea0
+      lastState:
+        terminated:
+          containerID: containerd://6ec056db7a023bd3e78690737253993f2e810f4164372503569c406d084f7117
+          exitCode: 1
+          finishedAt: "2025-10-05T16:37:29Z"
+          reason: Error
+          startedAt: "2025-10-05T16:37:29Z"
+      name: local-path-provisioner
+      ready: false
+      resources: {}
+      restartCount: 5
+      started: false
+      state:
+        waiting:
+          message: back-off 2m40s restarting failed container=local-path-provisioner
+            pod=local-path-provisioner-6964757ddd-hmr7t_kube-system(7e7b3a92-54a3-47b7-b30f-f72dfdaf98ce)
+          reason: CrashLoopBackOff
+      volumeMounts:
+      - mountPath: /etc/config/
+        name: config
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-slg6n
+        readOnly: true
+        recursiveReadOnly: Disabled
+    hostIP: 192.168.0.20
+    hostIPs:
+    - ip: 192.168.0.20
+    observedGeneration: 1
+    phase: Running
+    podIP: 10.244.1.45
+    podIPs:
+    - ip: 10.244.1.45
+    qosClass: BestEffort
+    startTime: "2025-10-05T16:34:24Z"
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "1"
+    creationTimestamp: "2025-10-05T16:34:24Z"
+    generation: 1
+    labels:
+      app: local-path-provisioner
+      pod-template-hash: 6964757ddd
+    name: local-path-provisioner-6964757ddd
+    namespace: kube-system
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: local-path-provisioner
+      uid: 2d52848d-54f3-414d-a9c5-ab9c8174b343
+    resourceVersion: "890551"
+    uid: 3539ca04-c6b9-4145-a09b-5b61f27bacb8
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
         app: local-path-provisioner
-    spec:
-      serviceAccountName: local-path-provisioner-service-account
-      containers:
-        - name: local-path-provisioner
+        pod-template-hash: 6964757ddd
+    template:
+      metadata:
+        labels:
+          app: local-path-provisioner
+          pod-template-hash: 6964757ddd
+      spec:
+        containers:
+        - command:
+          - local-path-provisioner
+          - --debug
+          - start
+          - --helper-image
+          - busybox:latest
           image: rancher/local-path-provisioner:v0.0.26
           imagePullPolicy: IfNotPresent
-          command:
-            - local-path-provisioner
-            - --debug
-            - start
-            - --helper-image
-            - busybox:latest
+          name: local-path-provisioner
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
           volumeMounts:
-            - name: config
-              mountPath: /etc/config/
-      volumes:
-        - name: config
-          configMap:
+          - mountPath: /etc/config/
+            name: config
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: local-path-provisioner-service-account
+        serviceAccountName: local-path-provisioner-service-account
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - configMap:
+            defaultMode: 420
             name: local-path-config
----
-apiVersion: v1
-kind: ServiceAccount
+          name: config
+  status:
+    fullyLabeledReplicas: 1
+    observedGeneration: 1
+    replicas: 1
+kind: List
 metadata:
-  name: local-path-provisioner-service-account
-  namespace: kube-system
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRole
-metadata:
-  name: local-path-provisioner-role
-rules:
-  - apiGroups: [""]
-    resources: ["nodes", "persistentvolumeclaims", "configmaps", "pods", "persistentvolumes", "events"]
-    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
-  - apiGroups: ["storage.k8s.io"]
-    resources: ["storageclasses"]
-    verbs: ["get", "list", "watch"]
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRoleBinding
-metadata:
-  name: local-path-provisioner-bind
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: local-path-provisioner-role
-subjects:
-  - kind: ServiceAccount
-    name: local-path-provisioner-service-account
-    namespace: kube-system
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: local-path-config
-  namespace: kube-system
-data:
-  config.json: |-
-    {
-      "nodePathMap":[
-        {
-          "node":"DEFAULT_PATH_FOR_NON_LISTED_NODES",
-          "paths":["/opt/local-path-provisioner"]
-        }
-      ]
-    }
----
-apiVersion: storage.k8s.io/v1
-kind: StorageClass
-metadata:
-  name: rancher.io/local-path
-  annotations:
-    storageclass.kubernetes.io/is-default-class: "true"
-provisioner: rancher.io/local-path
-reclaimPolicy: Delete
-volumeBindingMode: WaitForFirstConsumer
+  resourceVersion: ""
