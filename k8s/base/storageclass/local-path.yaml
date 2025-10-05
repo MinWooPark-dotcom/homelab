@@ -1,8 +1,0 @@
-apiVersion: storage.k8s.io/v1
-kind: StorageClass
-metadata:
-  name: local-path
-  annotations:
-    storageclass.kubernetes.io/is-default-class: "true"  # 기본 StorageClass로 지정
-provisioner: kubernetes.io/no-provisioner                # 로컬 환경 수동 프로비저너
-volumeBindingMode: WaitForFirstConsumer
