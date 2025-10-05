@@ -10,7 +10,7 @@ grafana:
     nodePort: 30082
   persistence:
     enabled: true
-    storageClassName: local-path
+    storageClassName: rancher.io/local-path
     size: 2Gi
   ingress:
     enabled: true
@@ -25,7 +25,7 @@ prometheus:
     storageSpec:
       volumeClaimTemplate:
         spec:
-          storageClassName: local-path
+          storageClassName: rancher.io/local-path
           accessModes: ["ReadWriteOnce"]
           resources:
             requests:
