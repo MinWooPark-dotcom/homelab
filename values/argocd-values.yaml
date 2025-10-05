@@ -3,8 +3,3 @@ server:
     type: NodePort
     nodePortHttp: 30080
     nodePortHttps: 30443
-
-repoServer:
-  env:
-    - name: GIT_NO_IPV6
-      value: "1"
