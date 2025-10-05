@@ -2,5 +2,5 @@ controller:
   service:
     type: NodePort
     nodePorts:
-      http: 30081
+      http: 30083
       https: 30444
