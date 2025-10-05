@@ -10,6 +10,7 @@ grafana:
     nodePort: 30082
   persistence:
     enabled: true
+    storageClassName: local-path
     size: 2Gi
   ingress:
     enabled: true
@@ -18,3 +19,14 @@ grafana:
       - grafana.homelab.local
     path: /
     pathType: Prefix
+
+prometheus:
+  prometheusSpec:
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: local-path
+          accessModes: ["ReadWriteOnce"]
+          resources:
+            requests:
+              storage: 5Gi
